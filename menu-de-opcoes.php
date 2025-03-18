@@ -29,7 +29,7 @@ while ($rodando) {
             limparTerminal();
             break;
 
-            default:
+        default:
             echo "\nOpção inválida!\n";
     }
 }
@@ -39,18 +39,27 @@ function sacar($saldo)
     echo "\n Qual valor deseja sacar? \n";
     $valor = (float) fgets(STDIN);
 
-    if($valor > $saldo){
+    if ($valor > $saldo) {
         echo "\nSaldo insuficiente!\n";
     } else {
         $saldo -= $valor;
         return $saldo;
     }
-
 }
 
-function depositar(){
+function depositar()
+{
     echo "\n Qual valor deseja depositar? \n";
-    return (float) fgets(STDIN);
+    do {
+        $valor = (float) fgets(STDIN);
+
+        if($valor < 0){
+            quebrarLinhas(2);
+            echo "Valor R$ 0,00 ou negativos, não são aceitos para depósito.\n";
+            echo "Digite um valor para deposito válido \n";
+        }
+    } while ($valor < 0);
+    return $valor;
 }
 
 
@@ -81,8 +90,9 @@ function limparTerminal()
     }
 }
 
-function quebrarLinhas($numero){
-    while($numero >0){
+function quebrarLinhas($numero)
+{
+    while ($numero > 0) {
         echo "\n";
         $numero--;
     }
